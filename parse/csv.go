@@ -12,16 +12,6 @@ import (
 	cli "gopkg.in/urfave/cli.v1"
 )
 
-const (
-	// Headers
-	name    = "name"
-	address = "address"
-	city    = "city"
-	state   = "state"
-	zip     = "zip"
-	country = "country"
-)
-
 type headers struct {
 	name    int
 	address int
@@ -39,6 +29,7 @@ func Addresses(c *cli.Context) ([]models.Address, error) {
 	if err != nil {
 		return a, fmt.Errorf("CSV error: %v", err)
 	}
+	defer f.Close()
 
 	r := csv.NewReader(f)
 	records, err := r.ReadAll()
