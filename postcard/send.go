@@ -3,10 +3,10 @@ package postcard
 import (
 	"fmt"
 	"io/ioutil"
-	"strings"
 
 	"github.com/davidnix/lob-cli/lob"
 	"github.com/davidnix/lob-cli/parse"
+	"github.com/fatih/color"
 	cli "gopkg.in/urfave/cli.v1"
 )
 
@@ -30,26 +30,21 @@ func Send(c *cli.Context) error {
 	client := lob.NewClient(c.GlobalString("api-key"))
 
 	fromAddress := parse.FromAddress(c)
-	var errors []string
 	for _, v := range a {
 		var localErr error
 		verified, localErr := client.VerifyAddress(v)
 		if localErr != nil {
-			fmt.Println(localErr)
+			color.Red(localErr.Error())
 			continue
 		}
 		fmt.Println("Sending postcard for", verified)
 		localErr = client.SendPostcard(fromAddress, verified, front, back)
 		if localErr != nil {
-			fmt.Println("Error:", verified, localErr)
+			color.Red(fmt.Sprint("Error:", verified, localErr.Error(), "\n"))
 		}
 	}
 
-	if len(errors) > 0 {
-		return fmt.Errorf(strings.Join(errors, "\n"))
-	}
-
-	fmt.Println("Sending postcards complete!")
+	color.Green("Sending postcards complete!")
 	return nil
 }
 
