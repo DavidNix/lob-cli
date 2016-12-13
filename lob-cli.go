@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/davidnix/lob-cli/postcard"
 	dotenv "github.com/joho/godotenv"
 	cli "gopkg.in/urfave/cli.v1"
 )
@@ -59,12 +60,9 @@ func main() {
 
 	app.Commands = []cli.Command{
 		{
-			Name:  "postcards",
-			Usage: "Send postcards",
-			Action: func(c *cli.Context) error {
-				fmt.Println("postcard!")
-				return nil
-			},
+			Name:   "postcards",
+			Usage:  "Send postcards",
+			Action: postcard.Send,
 			Flags: []cli.Flag{
 				cli.StringFlag{
 					Name:  "front",
