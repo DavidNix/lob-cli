@@ -34,12 +34,14 @@ func Send(c *cli.Context) error {
 	for _, v := range a {
 		var localErr error
 		verified, localErr := client.VerifyAddress(v)
-		if localErr == nil {
-			fmt.Println("Sending postcard for", verified)
-			localErr = client.SendPostcard(fromAddress, verified, front, back)
-		}
 		if localErr != nil {
-			errors = append(errors, fmt.Sprint("Error:", a, localErr))
+			fmt.Println(localErr)
+			continue
+		}
+		fmt.Println("Sending postcard for", verified)
+		localErr = client.SendPostcard(fromAddress, verified, front, back)
+		if localErr != nil {
+			fmt.Println("Error:", verified, localErr)
 		}
 	}
 
