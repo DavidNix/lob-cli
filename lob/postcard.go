@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"github.com/davidnix/lob-cli/models"
+	"github.com/fatih/color"
 )
 
 func (c *Client) SendPostcard(from, to models.Address, front, back string) error {
@@ -58,13 +59,15 @@ func (c *Client) SendPostcard(from, to models.Address, front, back string) error
 
 	var apiResponse struct {
 		Delivery string `json:"expected_delivery_date"`
+		Preview  string `json:"url"`
 	}
 
 	decoder := json.NewDecoder(resp.Body)
 	if err = decoder.Decode(&apiResponse); err != nil {
-		fmt.Println("Unable to determine delivery date")
+		color.Yellow("Unable to determine delivery date or preview")
 	} else {
-		fmt.Println("Expected delivery date", apiResponse.Delivery)
+		color.Green("Expected delivery date " + apiResponse.Delivery)
+		color.Green(apiResponse.Preview)
 	}
 
 	return nil
