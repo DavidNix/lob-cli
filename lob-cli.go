@@ -13,7 +13,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "lob-cli"
 	app.Usage = "Print postcards and such from lob.com"
-	app.Version = "0.0.1"
+	app.Version = "0.0.2"
 	app.EnableBashCompletion = true
 
 	app.Flags = []cli.Flag{
