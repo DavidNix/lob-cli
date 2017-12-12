@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 
+	"errors"
+
 	"github.com/davidnix/lob-cli/lob"
 	"github.com/davidnix/lob-cli/parse"
 	"github.com/fatih/color"
@@ -13,14 +15,14 @@ import (
 // Send sends postcards from csv of addresses
 func Send(c *cli.Context) error {
 	var err error
-	a, err := parse.Addresses(c)
+	addresses, err := parse.Addresses(c)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println("Parsed", len(a), "addresses")
-	if len(a) == 0 {
-		return nil
+	fmt.Println("Parsed", len(addresses), "addresses")
+	if len(addresses) == 0 {
+		return errors.New("no addresses found")
 	}
 	front, back, err := openTemplates(c)
 	if err != nil {
@@ -30,21 +32,15 @@ func Send(c *cli.Context) error {
 	client := lob.NewClient(c.GlobalString("api-key"))
 
 	fromAddress := parse.FromAddress(c)
-	for _, v := range a {
-		var localErr error
-		verified, localErr := client.VerifyAddress(v)
+	for _, addr := range addresses {
+		fmt.Println("\nSending postcard for", addr)
+		localErr := client.SendPostcard(fromAddress, addr, front, back)
 		if localErr != nil {
-			color.Red(localErr.Error())
-			continue
-		}
-		fmt.Println("\nSending postcard for", verified)
-		localErr = client.SendPostcard(fromAddress, verified, front, back)
-		if localErr != nil {
-			color.Red(fmt.Sprint("Error:", verified, localErr.Error(), "\n"))
+			color.Red(fmt.Sprint("Error:", addr, localErr.Error(), "\n"))
 		}
 	}
 
-	color.Green("Sending postcards complete!")
+	color.Green("\nSending postcards complete!")
 	return nil
 }
 
