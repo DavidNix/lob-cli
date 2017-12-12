@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"io/ioutil"
+
 	"github.com/davidnix/lob-cli/models"
 )
 
@@ -17,7 +19,7 @@ func (c *Client) VerifyAddress(a models.Address) (models.Address, error) {
 	}
 
 	buf := bytes.NewBuffer(body)
-	r, err := http.NewRequest("POST", "https://api.lob.com/v1/verify", buf)
+	r, err := http.NewRequest("POST", "https://api.lob.com/v1/us_verifications", buf)
 	if err != nil {
 		return a, err
 	}
@@ -28,7 +30,8 @@ func (c *Client) VerifyAddress(a models.Address) (models.Address, error) {
 	// fmt.Println("RESPONSE:", string(pp))
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
-		return a, fmt.Errorf("Verify address %v failed, expected 200, got %v", a, resp.Status)
+		body, _ := ioutil.ReadAll(resp.Body)
+		return a, fmt.Errorf("verify address %v failed, expected 200, got %v, body: %s", a, resp.Status, body)
 	}
 
 	var data struct {

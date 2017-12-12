@@ -37,7 +37,7 @@ func Send(c *cli.Context) error {
 			color.Red(localErr.Error())
 			continue
 		}
-		fmt.Println("Sending postcard for", verified)
+		fmt.Println("\nSending postcard for", verified)
 		localErr = client.SendPostcard(fromAddress, verified, front, back)
 		if localErr != nil {
 			color.Red(fmt.Sprint("Error:", verified, localErr.Error(), "\n"))

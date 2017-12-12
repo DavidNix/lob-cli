@@ -20,16 +20,14 @@ func (c *Client) SendPostcard(from, to models.Address, front, back string) error
 	data.Set("back", back)
 
 	data.Set("to[name]", to.Name)
-	data.Set("to[address_line1]", to.AddressLine1)
-	data.Set("to[address_line2]", to.AddressLine2)
+	data.Set("to[address_line1]", to.Street)
 	data.Set("to[address_city]", to.City)
 	data.Set("to[address_state]", to.State)
 	data.Set("to[address_zip]", to.Zip)
 	data.Set("to[address_country]", to.Country)
 
 	data.Set("from[name]", from.Name)
-	data.Set("from[address_line1]", from.AddressLine1)
-	data.Set("from[address_line2]", from.AddressLine2)
+	data.Set("from[address_line1]", from.Street)
 	data.Set("from[address_city]", from.City)
 	data.Set("from[address_state]", from.State)
 	data.Set("from[address_zip]", from.Zip)

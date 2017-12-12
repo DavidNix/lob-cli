@@ -51,8 +51,7 @@ func Addresses(c *cli.Context) ([]models.Address, error) {
 	for _, record := range records {
 		a = append(a, models.Address{
 			Name:         record[h.name],
-			AddressLine1: record[h.address],
-			AddressLine2: "",
+			Street:       record[h.address],
 			City:         record[h.city],
 			State:        record[h.state],
 			Zip:          record[h.zip],
