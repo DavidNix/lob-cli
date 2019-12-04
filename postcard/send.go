@@ -34,6 +34,10 @@ func Send(c *cli.Context) error {
 	fromAddress := parse.FromAddress(c)
 	for _, addr := range addresses {
 		fmt.Println("\nSending postcard for", addr)
+		if !addr.Valid() {
+			color.Yellow("Skipping %s, invalid address", addr.Name)
+			continue
+		}
 		localErr := client.SendPostcard(fromAddress, addr, front, back)
 		if localErr != nil {
 			color.Red(fmt.Sprint("Error:", addr, localErr.Error(), "\n"))
