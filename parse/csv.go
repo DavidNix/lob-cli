@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/davidnix/lob-cli/models"
+	"github.com/DavidNix/lob-cli/models"
 
 	cli "gopkg.in/urfave/cli.v1"
 )
@@ -23,8 +23,7 @@ type headers struct {
 
 // Addresses returns array of Addresses for csv file
 func Addresses(c *cli.Context) ([]models.Address, error) {
-	var a = []models.Address{}
-	var err error
+	var a []models.Address
 	f, err := os.Open(c.GlobalString("csv"))
 	if err != nil {
 		return a, fmt.Errorf("CSV error: %v", err)

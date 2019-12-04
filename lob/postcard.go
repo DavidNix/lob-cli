@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/davidnix/lob-cli/models"
+	"github.com/DavidNix/lob-cli/models"
 	"github.com/fatih/color"
 )
 
@@ -46,7 +46,7 @@ func (c *Client) SendPostcard(from, to models.Address, front, back string) error
 
 	resp, err := c.netClient.Do(r)
 	if err != nil {
-		return fmt.Errorf("Send postcard for %v failed error:", to, err)
+		return fmt.Errorf("send postcard for %v failed error: %v", to, err)
 	}
 	// pp, _ := httputil.DumpResponse(resp, true)
 	// fmt.Println("RESPONSE:", string(pp))

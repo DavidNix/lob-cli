@@ -6,10 +6,10 @@ import (
 
 	"errors"
 
-	"github.com/davidnix/lob-cli/lob"
-	"github.com/davidnix/lob-cli/parse"
+	"github.com/DavidNix/lob-cli/lob"
+	"github.com/DavidNix/lob-cli/parse"
 	"github.com/fatih/color"
-	cli "gopkg.in/urfave/cli.v1"
+	"gopkg.in/urfave/cli.v1"
 )
 
 // Send sends postcards from csv of addresses

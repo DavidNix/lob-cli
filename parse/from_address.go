@@ -1,7 +1,7 @@
 package parse
 
 import (
-	"github.com/davidnix/lob-cli/models"
+	"github.com/DavidNix/lob-cli/models"
 	cli "gopkg.in/urfave/cli.v1"
 )
 

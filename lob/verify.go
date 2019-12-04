@@ -8,7 +8,7 @@ import (
 
 	"io/ioutil"
 
-	"github.com/davidnix/lob-cli/models"
+	"github.com/DavidNix/lob-cli/models"
 )
 
 func (c *Client) VerifyAddress(a models.Address) (models.Address, error) {
@@ -26,6 +26,9 @@ func (c *Client) VerifyAddress(a models.Address) (models.Address, error) {
 
 	c.config(r)
 	resp, err := c.netClient.Do(r)
+	if err != nil {
+		return a, err
+	}
 	// pp, _ := httputil.DumpResponse(resp, true)
 	// fmt.Println("RESPONSE:", string(pp))
 	defer resp.Body.Close()
