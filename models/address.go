@@ -10,7 +10,7 @@ type Address struct {
 }
 
 func (a Address) Valid() bool {
-	for _, val := range []string{a.Street, a.State, a.City, a.State, a.Zip, a.Country} {
+	for _, val := range []string{a.Street, a.City, a.State, a.Zip, a.Country} {
 		if val == "" {
 			return false
 		}

@@ -2,11 +2,14 @@ package lob
 
 import (
 	"bytes"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 
 	"github.com/DavidNix/lob-cli/models"
 	"github.com/fatih/color"
@@ -33,7 +36,6 @@ func (c *Client) SendPostcard(from, to models.Address, front, back string) error
 	data.Set("from[address_zip]", from.Zip)
 	data.Set("from[address_country]", from.Country)
 
-	var err error
 	body := bytes.NewBufferString(data.Encode())
 	r, err := http.NewRequest("POST", "https://api.lob.com/v1/postcards", body)
 	if err != nil {
@@ -43,6 +45,7 @@ func (c *Client) SendPostcard(from, to models.Address, front, back string) error
 	c.config(r)
 	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	r.Header.Set("Content-Length", strconv.Itoa(len(data.Encode())))
+	r.Header.Set("Idempotency-Key", idemKey(to))
 
 	resp, err := c.netClient.Do(r)
 	if err != nil {
@@ -69,4 +72,13 @@ func (c *Client) SendPostcard(from, to models.Address, front, back string) error
 	}
 
 	return nil
+}
+
+func idemKey(a models.Address) string {
+	h := sha256.New()
+	attrs := []string{a.Street, a.City, a.State, a.Zip, a.Country}
+	for i := range attrs {
+		h.Write([]byte(strings.ToUpper(attrs[i])))
+	}
+	return hex.EncodeToString(h.Sum(nil))
 }
