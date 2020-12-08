@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -45,7 +46,7 @@ func (c *Client) SendPostcard(from, to models.Address, front, back string) error
 	c.config(r)
 	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	r.Header.Set("Content-Length", strconv.Itoa(len(data.Encode())))
-	r.Header.Set("Idempotency-Key", idemKey(to))
+	r.Header.Set("Idempotency-Key", c.idempotentKey(to))
 
 	resp, err := c.netClient.Do(r)
 	if err != nil {
@@ -72,7 +73,10 @@ func (c *Client) SendPostcard(from, to models.Address, front, back string) error
 	return nil
 }
 
-func idemKey(a models.Address) string {
+func (c *Client) idempotentKey(a models.Address) string {
+	if c.IsTest() {
+		return strconv.FormatInt(rand.Int63(), 10)
+	}
 	h := sha256.New()
 	attrs := []string{a.Street, a.City, a.State, a.Zip, a.Country}
 	for i := range attrs {

@@ -1,7 +1,9 @@
 package lob
 
 import (
+	"math/rand"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -9,6 +11,10 @@ import (
 type Client struct {
 	apiKey    string
 	netClient *http.Client
+}
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
 }
 
 // NewClient lob.com api client abstraction
@@ -19,6 +25,11 @@ func NewClient(apiKey string) *Client {
 			Timeout: time.Second * 10,
 		},
 	}
+}
+
+// IsTest returns true if the client was configured with a test api key
+func (c *Client) IsTest() bool {
+	return strings.HasPrefix(c.apiKey, "test_")
 }
 
 func (c *Client) config(r *http.Request) {

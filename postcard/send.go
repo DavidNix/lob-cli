@@ -29,7 +29,12 @@ func Send(c *cli.Context) error {
 		return err
 	}
 
-	client := lob.NewClient(c.GlobalString("api-key"))
+	apiKey := c.GlobalString("api-key")
+	client := lob.NewClient(apiKey)
+
+	if client.IsTest() {
+		color.Yellow("Test API Key %s detected; no postcards will be sent", apiKey)
+	}
 
 	fromAddress := parse.FromAddress(c)
 	for _, addr := range addresses {
