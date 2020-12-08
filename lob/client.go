@@ -11,7 +11,7 @@ type Client struct {
 	netClient *http.Client
 }
 
-//NewClient lob.com api client abstraction
+// NewClient lob.com api client abstraction
 func NewClient(apiKey string) *Client {
 	return &Client{
 		apiKey: apiKey,

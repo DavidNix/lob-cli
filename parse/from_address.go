@@ -5,7 +5,7 @@ import (
 	cli "gopkg.in/urfave/cli.v1"
 )
 
-//FromAddress returns parsed return Address
+// FromAddress returns parsed return Address
 func FromAddress(c *cli.Context) models.Address {
 	return models.Address{
 		Name:    c.GlobalString("from-name"),

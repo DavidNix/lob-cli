@@ -51,11 +51,9 @@ func (c *Client) SendPostcard(from, to models.Address, front, back string) error
 	if err != nil {
 		return fmt.Errorf("send postcard for %v failed error: %v", to, err)
 	}
-	// pp, _ := httputil.DumpResponse(resp, true)
-	// fmt.Println("RESPONSE:", string(pp))
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
-		return fmt.Errorf("Send postcard for %v failed, expected 200, got %v", to, resp.Status)
+		return fmt.Errorf("send postcard for %v failed, expected 200, got %v", to, resp.Status)
 	}
 
 	var apiResponse struct {

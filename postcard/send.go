@@ -53,13 +53,13 @@ func openTemplates(c *cli.Context) (string, string, error) {
 	frontURI := c.String("front")
 	front, err := ioutil.ReadFile(frontURI)
 	if err != nil {
-		return "", "", fmt.Errorf("Invalid front file %v: error %v", frontURI, err)
+		return "", "", fmt.Errorf("invalid front file %v: error %v", frontURI, err)
 	}
 
 	backURI := c.String("back")
 	back, err := ioutil.ReadFile(backURI)
 	if err != nil {
-		return "", "", fmt.Errorf("Invalid back file %v: error %v", backURI, err)
+		return "", "", fmt.Errorf("invalid back file %v: error %v", backURI, err)
 	}
 
 	return string(front), string(back), nil

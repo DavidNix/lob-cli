@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/DavidNix/lob-cli/postcard"
@@ -85,9 +86,10 @@ func main() {
 
 func loadEnv() {
 	// file exists
-	if _, err := os.Stat("./.env"); err == nil {
-		if envErr := dotenv.Load(); envErr != nil {
-			fmt.Println("Warning, unable to load .env:", envErr)
-		}
+	if _, err := os.Stat("./.env"); err != nil {
+		return
+	}
+	if err := dotenv.Load(); err != nil {
+		log.Println("Warning, unable to load .env:", err)
 	}
 }
