@@ -1,12 +1,14 @@
-.PHONY: setup test
+.PHONY: setup test install
 
-default: test
+default: test install
 
 setup:
-	go get -t ./...
 	go get -u github.com/cortesi/modd/cmd/modd
-	go get -u github.com/alecthomas/gometalinter
-	gometalinter --install --update
+	go get -u honnef.co/go/tools/cmd/staticcheck
 
 test:
+	staticcheck ./...
 	go test -timeout=60s ./...
+
+install:
+	go install ./cmd/...
