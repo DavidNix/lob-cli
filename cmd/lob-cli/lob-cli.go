@@ -59,8 +59,11 @@ func main() {
 
 	app.Commands = []*cli.Command{
 		{
-			Name:   "postcards",
-			Usage:  "Send postcards",
+			Name:  "postcards",
+			Usage: "Send postcards",
+			Description: `Example:
+Setup .envrc. See .envrc.example.
+$ lob-cli --csv ~/Downloads/xmas.csv postcards --front file/to/front.html --back /file/to/back.html`,
 			Action: postcard.Send,
 			Flags: []cli.Flag{
 				&cli.StringFlag{
