@@ -7,3 +7,4 @@ tmp/**/*
 !tmp/cache/.keep
 .idea/*
 .env
+/.envrc
