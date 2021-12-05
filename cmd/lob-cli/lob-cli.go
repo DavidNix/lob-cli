@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/DavidNix/lob-cli/postcard"
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 func main() {
@@ -16,58 +16,58 @@ func main() {
 	app.EnableBashCompletion = true
 
 	app.Flags = []cli.Flag{
-		cli.StringFlag{
-			Name:   "api-key, k",
-			Usage:  "Lob.com API `KEY`",
-			EnvVar: "LOB_API_KEY",
+		&cli.StringFlag{
+			Name:    "api-key, k",
+			Usage:   "Lob.com API `KEY`",
+			EnvVars: []string{"LOB_API_KEY"},
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "csv",
 			Usage: "Load recipient addresses from csv `FILE`",
 		},
-		cli.StringFlag{
-			Name:   "from-name",
-			Usage:  "Return address `NAME`",
-			EnvVar: "LOB_FROM_NAME",
+		&cli.StringFlag{
+			Name:    "from-name",
+			Usage:   "Return address `NAME`",
+			EnvVars: []string{"LOB_FROM_NAME"},
 		},
-		cli.StringFlag{
-			Name:   "from-address",
-			Usage:  "Return address `STREET`",
-			EnvVar: "LOB_FROM_ADDRESS",
+		&cli.StringFlag{
+			Name:    "from-address",
+			Usage:   "Return address `STREET`",
+			EnvVars: []string{"LOB_FROM_ADDRESS"},
 		},
-		cli.StringFlag{
-			Name:   "from-city",
-			Usage:  "Return address `CITY`",
-			EnvVar: "LOB_FROM_CITY",
+		&cli.StringFlag{
+			Name:    "from-city",
+			Usage:   "Return address `CITY`",
+			EnvVars: []string{"LOB_FROM_CITY"},
 		},
-		cli.StringFlag{
-			Name:   "from-state",
-			Usage:  "Return address `STATE`",
-			EnvVar: "LOB_FROM_STATE",
+		&cli.StringFlag{
+			Name:    "from-state",
+			Usage:   "Return address `STATE`",
+			EnvVars: []string{"LOB_FROM_STATE"},
 		},
-		cli.StringFlag{
-			Name:   "from-zip",
-			Usage:  "Return address `ZIPCODE`",
-			EnvVar: "LOB_FROM_ZIPCODE",
+		&cli.StringFlag{
+			Name:    "from-zip",
+			Usage:   "Return address `ZIPCODE`",
+			EnvVars: []string{"LOB_FROM_ZIPCODE"},
 		},
-		cli.StringFlag{
-			Name:   "from-country",
-			Usage:  "Return address `COUNTRY`",
-			EnvVar: "LOB_FROM_COUNTRY",
+		&cli.StringFlag{
+			Name:    "from-country",
+			Usage:   "Return address `COUNTRY`",
+			EnvVars: []string{"LOB_FROM_COUNTRY"},
 		},
 	}
 
-	app.Commands = []cli.Command{
+	app.Commands = []*cli.Command{
 		{
 			Name:   "postcards",
 			Usage:  "Send postcards",
 			Action: postcard.Send,
 			Flags: []cli.Flag{
-				cli.StringFlag{
+				&cli.StringFlag{
 					Name:  "front",
 					Usage: "Load front from html template `FILE`",
 				},
-				cli.StringFlag{
+				&cli.StringFlag{
 					Name:  "back",
 					Usage: "Load back from html template `FILE`",
 				},

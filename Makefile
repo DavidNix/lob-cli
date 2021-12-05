@@ -7,6 +7,7 @@ setup:
 	go get -d -u honnef.co/go/tools/cmd/staticcheck
 
 test:
+	go mod tidy
 	staticcheck ./...
 	go test -timeout=60s ./...
 

@@ -9,7 +9,7 @@ import (
 	"github.com/DavidNix/lob-cli/lob"
 	"github.com/DavidNix/lob-cli/parse"
 	"github.com/fatih/color"
-	"gopkg.in/urfave/cli.v1"
+	"github.com/urfave/cli/v2"
 )
 
 // Send sends postcards from csv of addresses
@@ -29,7 +29,7 @@ func Send(c *cli.Context) error {
 		return err
 	}
 
-	apiKey := c.GlobalString("api-key")
+	apiKey := c.String("api-key")
 	client := lob.NewClient(apiKey)
 
 	if client.IsTest() {
