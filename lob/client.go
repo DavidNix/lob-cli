@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// Client abstracts interating with lob.com's api
+// Client abstracts interacting with lob.com's api
 type Client struct {
 	apiKey    string
 	netClient *http.Client
