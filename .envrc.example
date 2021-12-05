@@ -1,0 +1,10 @@
+# export LOB_API_KEY=live_abc123
+export LOB_API_KEY=test_abc123
+
+export LOB_FROM_NAME="The Nix Family"
+export LOB_FROM_ADDRESS="123 Fake St"
+export LOB_FROM_CITY="Highlands Ranch"
+export LOB_FROM_STATE=CO
+export LOB_FROM_ZIPCODE=54321
+export LOB_FROM_COUNTRY=US
+
