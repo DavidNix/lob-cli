@@ -2,12 +2,10 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/DavidNix/lob-cli/postcard"
-	dotenv "github.com/joho/godotenv"
-	"gopkg.in/urfave/cli.v1"
+	"github.com/urfave/cli"
 )
 
 func main() {
@@ -77,19 +75,7 @@ func main() {
 		},
 	}
 
-	loadEnv()
-
 	if runErr := app.Run(os.Args); runErr != nil {
 		fmt.Println("RUN ERROR:", runErr)
-	}
-}
-
-func loadEnv() {
-	// file exists
-	if _, err := os.Stat("./.env"); err != nil {
-		return
-	}
-	if err := dotenv.Load(); err != nil {
-		log.Println("Warning, unable to load .env:", err)
 	}
 }
