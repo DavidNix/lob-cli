@@ -3,8 +3,8 @@
 default: test install
 
 setup:
-	go get -u github.com/cortesi/modd/cmd/modd
-	go get -u honnef.co/go/tools/cmd/staticcheck
+	go get -d -u github.com/cortesi/modd/cmd/modd
+	go get -d -u honnef.co/go/tools/cmd/staticcheck
 
 test:
 	staticcheck ./...
